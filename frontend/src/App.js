@@ -1,26 +1,27 @@
 import logo from './logo.svg';
 import './App.css';
+import React, {useState, useEffect} from 'react';
+import axios from "axios";
 
 
 function App() {
 
-  const list = [
-    {
-      "id": 1,
-      "title": "1st todo",
-      "body": "Learn Django properly."
-    },
-    {
-      "id": 2,
-      "title": "Second item",
-      "body": "Learn Python."
-    },
-    {
-      "id": 3,
-      "title": "Learn HTTP",
-      "body": "It's important."
-    }
-  ]
+  const [list, setList] = useState([]);
+
+  const getTodos = () => {
+    axios
+      .get('http://127.0.0.1:8000/api/')
+      .then(res => {
+        setList(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  };
+
+  useEffect(() => {
+    getTodos();
+  }, []);
 
   return (
     <div>
